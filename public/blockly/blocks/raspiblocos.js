@@ -11,7 +11,8 @@ Blockly.Blocks['gpio'] = {
         .appendField(new Blockly.FieldDropdown(opt), "number");
     this.appendValueInput("instruction");
     this.setInputsInline(true);
-    this.setOutput(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
     this.setTooltip('');
   }
 };
@@ -45,7 +46,11 @@ Blockly.Blocks['getstate'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(180);
     this.appendDummyInput()
-        .appendField("verificar estado");
+        .appendField("gpio");
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(opt), "number");
+    this.appendDummyInput()
+        .appendField("retornar estado");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setTooltip('');
@@ -127,13 +132,14 @@ Blockly.Blocks['sensor'] = {
     this.appendDummyInput()
         .appendField("sensor de proximidade");
     this.appendDummyInput()
+        .appendField("echo:")
         .appendField(new Blockly.FieldDropdown(opt), "gpio1")
+        .appendField("trigger:")
         .appendField(new Blockly.FieldDropdown(opt), "gpio2")
     this.appendValueInput("instruction");
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
+    this.setOutput(true);
     this.setInputsInline(true);
-    this.setColour(200);
+    this.setColour(210);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
@@ -145,7 +151,7 @@ Blockly.Blocks['measure'] = {
         .appendField("medir distância");
     this.setInputsInline(true);
     this.setOutput(true);
-    this.setColour(200);
+    this.setColour(210);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }

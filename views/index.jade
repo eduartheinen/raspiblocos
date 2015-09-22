@@ -3,3 +3,72 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  button(onclick="runCode()").
+    Run JavaScript
+  #blocklyDiv(style='height: 480px; width: 1200px;')
+
+  xml(id="toolbox" style="display: none").
+    <category name="Estruturas de Controle">
+      <block type="controls_if"></block>
+      <block type="controls_whileUntil"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_boolean"></block>
+    </category>
+    <category name="Variáveis" custom="VARIABLE"></category>
+    <category name="Matemática">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+    </category>
+    <category name="Raspberry-Pi">
+      <block type="gpio"></block>
+      <block type="turnon"></block>
+      <block type="turnoff"></block>
+      <block type="getstate"></block>
+      <block type="dcmotor"></block>
+      <block type="moveforward"></block>
+      <block type="movebackward"></block>
+      <block type="twodcmotor"></block>
+      <block type="sensor"></block>
+      <block type="measure"></block>
+    </category>
+
+
+  script.
+    var workspace,
+    
+    custom = function() {
+      console.log('load custom');
+      loadCustomBlocks(['raspiblocos.js'], inject);
+    },
+    
+    inject = function(){
+      console.log('inject');
+      workspace = Blockly.inject(document.getElementById('blocklyDiv'),{toolbox: document.getElementById('toolbox')});
+    };
+    
+    console.log('load blockly');
+    loadBlockly(custom);
+    function runCode() {
+      // Generate JavaScript code and run it.
+      //window.LoopTrap = 1000;
+      //Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      //Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      try {
+        console.log(code);
+        sendCode(code);
+      } catch (e) {
+        alert(e);
+      }
+    }
+    
+    function sendCode(inst){
+      $.post("/raspiblocos", {"code" : inst})
+      .then(function (data, textStatus, jqXHR) {
+          console.log(data);
+      }, function (jqXHR, textStatus, errorThrown) {
+          console.log(errorThrown);
+      });
+    }

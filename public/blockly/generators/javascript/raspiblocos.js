@@ -2,7 +2,7 @@
 Blockly.JavaScript['gpio'] = function(block) {
   var dropdown_number = block.getFieldValue('number');
   var value_instruction = Blockly.JavaScript.valueToCode(block, 'instruction', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = "yield builder.gpio(" + dropdown_number + ")" + value_instruction;
+  var code = "yield builder.gpio(" + dropdown_number + ")" + value_instruction + ";";
   return code;
 };
 
@@ -17,7 +17,8 @@ Blockly.JavaScript['turnoff'] = function(block) {
 };
 
 Blockly.JavaScript['getstate'] = function(block) {
-  var code = '.getState()';
+  var dropdown_number = block.getFieldValue('number');
+  var code = "yield builder.gpio(" + dropdown_number + ").getState()";
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
@@ -58,8 +59,9 @@ Blockly.JavaScript['sensor'] = function(block) {
   var gpio1 = block.getFieldValue('gpio1');
   var gpio2 = block.getFieldValue('gpio2');
   var instruction = Blockly.JavaScript.valueToCode(block, 'instruction', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = "yield builder.sensor([" + gpio1 + "," + gpio2 + "])" + instruction + ";";
-  return code;
+  var code = "yield builder.sensor([" + gpio1 + "," + gpio2 + "])" + instruction;
+  console.log(code);
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 Blockly.JavaScript['measure'] = function(block) {

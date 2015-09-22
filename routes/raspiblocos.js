@@ -1,7 +1,7 @@
 var express = require('express'),
 router = express.Router(),
 Q = require('q'),
-//sensorFactory = require('raspiblocos/sensor'),
+sensorFactory = require('raspiblocos/sensor'),
 dcmotorFactory = require('raspiblocos/dcmotor'),
 gpioFactory = require('raspiblocos/gpio');
 //singletons
@@ -14,7 +14,7 @@ router.post('/', function (req, res, next) {
   .then((code) => {
     Q.async(code)()
     .then(
-      () => {res.status(200).json('done')}, 
+      () => {res.status(200).json('done')},
       (e) => {console.log(e); return new Error(e)})
   })
   .fail((e) => {
@@ -32,7 +32,7 @@ function textToFunction(text) {
   } catch (e) {
     deferred.reject(new Error(e));
   }
-  return deferred.promise  
+  return deferred.promise
 }
 
 global.builder = {
@@ -44,6 +44,9 @@ global.builder = {
   },
   gpio : function(params){
     return gpioFactory(params);
+  },
+  sensor : function(params){
+    return sensorFactory(params);
   }
 };
 
