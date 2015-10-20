@@ -2,7 +2,7 @@
 Blockly.JavaScript['gpio'] = function(block) {
   var dropdown_number = block.getFieldValue('number');
   var value_instruction = Blockly.JavaScript.valueToCode(block, 'instruction', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = "yield builder.gpio(" + dropdown_number + ")" + value_instruction + ";";
+  var code = "yield builder.gpio(" + dropdown_number + ")" + value_instruction + ";\n";
   return code;
 };
 
@@ -27,7 +27,7 @@ Blockly.JavaScript['dcmotor'] = function(block) {
   var gpio1 = block.getFieldValue('gpio1');
   var gpio2 = block.getFieldValue('gpio2');
   var instruction = Blockly.JavaScript.valueToCode(block, 'instruction', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = "yield builder.dcmotor([" + gpio1 + "," + gpio2 + "])" + instruction + ";";
+  var code = "yield builder.dcmotor([" + gpio1 + "," + gpio2 + "])" + instruction + ";\n";
   return code;
 };
 
@@ -50,7 +50,7 @@ Blockly.JavaScript['twodcmotor'] = function(block) {
   var gpio4 = block.getFieldValue('gpio4');
   var instruction = Blockly.JavaScript.valueToCode(block, 'instruction', Blockly.JavaScript.ORDER_ATOMIC);
   var code = "builder.dcmotor([" + gpio1 + "," + gpio2 + "])" + instruction;
-  var code = code + "; yield builder.dcmotor([" + gpio3 + "," + gpio4 + "])" + instruction + ";";
+  var code = code + "; yield builder.dcmotor([" + gpio3 + "," + gpio4 + "])" + instruction + ";\n";
   return code;
 };
 
@@ -67,4 +67,11 @@ Blockly.JavaScript['sensor'] = function(block) {
 Blockly.JavaScript['measure'] = function(block) {
   var code = '.measure()';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['return'] = function(block) {
+  var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'return ' + value_var + ';\n';
+  return code;
 };

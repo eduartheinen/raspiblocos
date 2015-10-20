@@ -156,3 +156,17 @@ Blockly.Blocks['measure'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+Blockly.Blocks['return'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("return");
+    this.appendValueInput("var");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(150);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
