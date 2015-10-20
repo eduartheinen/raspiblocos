@@ -1,33 +1,38 @@
-var express = require('express'),
-router = express.Router(),
-Q = require('q'),
-sensorFactory = require('raspiblocos/sensor'),
-dcmotorFactory = require('raspiblocos/dcmotor'),
-gpioFactory = require('raspiblocos/gpio');
+var express = require('express');
+var router = express.Router();
+var Q = require('q');
+var sensorFactory = require('raspiblocos/sensor');
+var dcmotorFactory = require('raspiblocos/dcmotor');
+var gpioFactory = require('raspiblocos/gpio');
+var wait = require('raspiblocos/wait');
 //singletons
 //ports = new Array(),
 //modules = new Array();
 
 /* GET home page. */
-router.post('/', function (req, res, next) {
+router.post('/', function(req, res, next) {
   textToFunction(req.body.code)
-  .then((code) => {
-    Q.async(code)()
-    .then(
-      () => {res.status(200).json('done')},
-      (e) => {console.log(e); return new Error(e)})
-  })
-  .fail((e) => {
-    res.status(500).send({ error : e.message });
-  });
+    .then((code) => {
+      Q.async(code)()
+        .then(
+          (mes) => {
+            mes != undefined ? res.status(200).json(mes) : res.status(200).json('done');
+          }, (e) => {
+            console.log(e);
+            return new Error(e);
+          });
+    })
+    .fail((e) => {
+      res.status(500).send({
+        error: e.message
+      });
+    });
 });
-
 
 function textToFunction(text) {
   var deferred = Q.defer();
   try {
-    var GeneratorFunction = Object.getPrototypeOf(function*(){}).constructor
-    //console.log(String(res));
+    var GeneratorFunction = Object.getPrototypeOf(function*() {}).constructor
     deferred.resolve(new GeneratorFunction(text));
   } catch (e) {
     deferred.reject(new Error(e));
@@ -36,17 +41,17 @@ function textToFunction(text) {
 }
 
 global.builder = {
-  /*sensor : function(params){
-    return sensorFactory(params);
-  },*/
-  dcmotor : function(params){
+  dcmotor: function(params) {
     return dcmotorFactory(params);
   },
-  gpio : function(params){
+  gpio: function(params) {
     return gpioFactory(params);
   },
-  sensor : function(params){
+  sensor: function(params) {
     return sensorFactory(params);
+  },
+  wait: function(params) {
+    return wait(params);
   }
 };
 

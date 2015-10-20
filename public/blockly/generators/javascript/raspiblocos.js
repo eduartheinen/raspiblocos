@@ -33,13 +33,13 @@ Blockly.JavaScript['dcmotor'] = function(block) {
 
 Blockly.JavaScript['moveforward'] = function(block) {
   var time = block.getFieldValue('time');
-  var code = '.moveForward('+ time +')';
+  var code = '.moveForward(' + time + ')';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 Blockly.JavaScript['movebackward'] = function(block) {
   var time = block.getFieldValue('time');
-  var code = '.moveBackward('+ time +')';
+  var code = '.moveBackward(' + time + ')';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
@@ -71,7 +71,13 @@ Blockly.JavaScript['measure'] = function(block) {
 
 Blockly.JavaScript['return'] = function(block) {
   var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
   var code = 'return ' + value_var + ';\n';
   return code;
+};
+
+//dc-motor
+Blockly.JavaScript['wait'] = function(block) {
+  var time = block.getFieldValue('time');
+  var code = "yield builder.wait(" + time + ");\n";
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

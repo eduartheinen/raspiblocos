@@ -1,4 +1,21 @@
-var opt = [["2", "2"], ["3", "3"], ["4", "4"], ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], ["11", "11"], ["14", "14"], ["15", "15"], ["17", "17"], ["18", "18"], ["22", "22"], ["23", "23"], ["24", "24"], ["25", "25"]];
+var opt = [
+  ["2", "2"],
+  ["3", "3"],
+  ["4", "4"],
+  ["7", "7"],
+  ["8", "8"],
+  ["9", "9"],
+  ["10", "10"],
+  ["11", "11"],
+  ["14", "14"],
+  ["15", "15"],
+  ["17", "17"],
+  ["18", "18"],
+  ["22", "22"],
+  ["23", "23"],
+  ["24", "24"],
+  ["25", "25"]
+];
 
 //GPIO
 Blockly.Blocks['gpio'] = {
@@ -6,9 +23,9 @@ Blockly.Blocks['gpio'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(180);
     this.appendDummyInput()
-        .appendField("gpio");
+      .appendField("gpio");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown(opt), "number");
+      .appendField(new Blockly.FieldDropdown(opt), "number");
     this.appendValueInput("instruction");
     this.setInputsInline(true);
     this.setPreviousStatement(true);
@@ -22,7 +39,7 @@ Blockly.Blocks['turnon'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(180);
     this.appendDummyInput()
-        .appendField("ligar");
+      .appendField("ligar");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setTooltip('');
@@ -34,7 +51,7 @@ Blockly.Blocks['turnoff'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(180);
     this.appendDummyInput()
-        .appendField("desligar");
+      .appendField("desligar");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setTooltip('');
@@ -46,11 +63,11 @@ Blockly.Blocks['getstate'] = {
     this.setHelpUrl('http://www.example.com/');
     this.setColour(180);
     this.appendDummyInput()
-        .appendField("gpio");
+      .appendField("gpio");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown(opt), "number");
+      .appendField(new Blockly.FieldDropdown(opt), "number");
     this.appendDummyInput()
-        .appendField("retornar estado");
+      .appendField("retornar estado");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setTooltip('');
@@ -61,10 +78,10 @@ Blockly.Blocks['getstate'] = {
 Blockly.Blocks['dcmotor'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("motor dc");
+      .appendField("motor dc");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown(opt), "gpio1")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio2")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio1")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio2")
     this.appendValueInput("instruction");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
@@ -78,10 +95,10 @@ Blockly.Blocks['dcmotor'] = {
 Blockly.Blocks['moveforward'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("mover adiante");
+      .appendField("mover adiante");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput("100"), "time")
-        .appendField("ms");
+      .appendField(new Blockly.FieldTextInput("100"), "time")
+      .appendField("ms");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setColour(260);
@@ -93,10 +110,10 @@ Blockly.Blocks['moveforward'] = {
 Blockly.Blocks['movebackward'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("mover atrás");
+      .appendField("mover atrás");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput("100"), "time")
-        .appendField("ms");
+      .appendField(new Blockly.FieldTextInput("100"), "time")
+      .appendField("ms");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setColour(260);
@@ -108,15 +125,15 @@ Blockly.Blocks['movebackward'] = {
 Blockly.Blocks['twodcmotor'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("motores dc");
+      .appendField("motores dc");
     this.appendDummyInput()
-        .appendField("motor1")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio1")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio2");
+      .appendField("motor1")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio1")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio2");
     this.appendDummyInput()
-        .appendField("motor2")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio3")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio4");
+      .appendField("motor2")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio3")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio4");
     this.appendValueInput("instruction");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
@@ -130,12 +147,12 @@ Blockly.Blocks['twodcmotor'] = {
 Blockly.Blocks['sensor'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("sensor de proximidade");
+      .appendField("sensor de proximidade");
     this.appendDummyInput()
-        .appendField("echo:")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio1")
-        .appendField("trigger:")
-        .appendField(new Blockly.FieldDropdown(opt), "gpio2")
+      .appendField("echo:")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio1")
+      .appendField("trigger:")
+      .appendField(new Blockly.FieldDropdown(opt), "gpio2")
     this.appendValueInput("instruction");
     this.setOutput(true);
     this.setInputsInline(true);
@@ -148,7 +165,7 @@ Blockly.Blocks['sensor'] = {
 Blockly.Blocks['measure'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("medir distância");
+      .appendField("medir distância");
     this.setInputsInline(true);
     this.setOutput(true);
     this.setColour(210);
@@ -160,12 +177,29 @@ Blockly.Blocks['measure'] = {
 Blockly.Blocks['return'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("return");
+      .appendField("return");
     this.appendValueInput("var");
     this.setInputsInline(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(150);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+//wait
+Blockly.Blocks['wait'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("aguarde");
+    this.appendDummyInput()
+      .appendField(new Blockly.FieldTextInput("100"), "time")
+      .appendField("ms");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(320);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
