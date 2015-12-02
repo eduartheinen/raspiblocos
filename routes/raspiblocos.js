@@ -4,15 +4,43 @@ var Q = require('q');
 var sensorFactory = require('raspiblocos/sensor');
 var dcmotorFactory = require('raspiblocos/dcmotor');
 var gpioFactory = require('raspiblocos/gpio');
-var wait = require('raspiblocos/wait');
-//singletons
-//ports = new Array(),
-//modules = new Array();
+var buttonFactory = require('raspiblocos/button');
 
-/* GET home page. */
+/*
+TODO
+ - singletons
+ - print
+*/
+
+/* As the functions are called inside the dinamically
+created GeneratorFunction, we need to declare the builders
+and the wait function in the global scope */
+global.wait = require('raspiblocos/wait');
+
+global.builder = {
+  dcmotor: function(params) {
+    return dcmotorFactory(params);
+  },
+
+  gpio: function(params) {
+    return gpioFactory(params);
+  },
+
+  sensor: function(params) {
+    return sensorFactory(params);
+  },
+
+  button: function(params) {
+    return buttonFactory(params);
+  }
+};
+
+/* receive and handle instructions */
 router.post('/', function(req, res, next) {
+  //turns the request text in GeneratorFunctions
   textToFunction(req.body.code)
     .then((code) => {
+      //then runs it and sends succes or error messages back to view
       Q.async(code)()
         .then(
           (mes) => {
@@ -32,51 +60,16 @@ router.post('/', function(req, res, next) {
 function textToFunction(text) {
   var deferred = Q.defer();
   try {
-    var GeneratorFunction = Object.getPrototypeOf(function*() {}).constructor
+    //gets the GeneratorFunction constructor
+    var GeneratorFunction = Object.getPrototypeOf(function*() {}).constructor;
+
+    //and uses it to declare a new function with the text received
     deferred.resolve(new GeneratorFunction(text));
   } catch (e) {
     deferred.reject(new Error(e));
-  }
-  return deferred.promise
-}
+  };
 
-global.builder = {
-  dcmotor: function(params) {
-    return dcmotorFactory(params);
-  },
-  gpio: function(params) {
-    return gpioFactory(params);
-  },
-  sensor: function(params) {
-    return sensorFactory(params);
-  },
-  wait: function(params) {
-    return wait(params);
-  }
+  return deferred.promise;
 };
-
-
-/*var _builder = function(name, params){
-  var mod = modules[name + '[' + params + ']'];
-  if(mod == undefined){
-    //portas ocupadas? ocupadas por o que?
-    var factory = name + 'Factory()';
-    mod = factory(params);
-    modules['sensor[' + params + ']'] = mod;
-    params.forEach(function(port){
-      ports[port] = modules['sensor[' + params + ']'];
-    });
-    console.log(ports)
-;l o   console.log(modules);
-  }
-  return mod;
-}
-var time = {
-  wait: function(time){
-    return Q.delay(time * 1000).then(function(){
-      return 'paused for ' + time * 1000;
-    })
-  }
-}*/
 
 module.exports = router;

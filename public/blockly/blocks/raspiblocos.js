@@ -17,7 +17,7 @@ var opt = [
   ["25", "25"]
 ];
 
-//GPIO
+//gpio
 Blockly.Blocks['gpio'] = {
   init: function() {
     this.setHelpUrl('http://www.example.com/');
@@ -74,7 +74,7 @@ Blockly.Blocks['getstate'] = {
   }
 };
 
-//DC-MOTOR
+//dc-motor
 Blockly.Blocks['dcmotor'] = {
   init: function() {
     this.appendDummyInput()
@@ -143,7 +143,7 @@ Blockly.Blocks['twodcmotor'] = {
   }
 };
 
-//sensor
+//proximity-sensor
 Blockly.Blocks['sensor'] = {
   init: function() {
     this.appendDummyInput()
@@ -169,20 +169,6 @@ Blockly.Blocks['measure'] = {
     this.setInputsInline(true);
     this.setOutput(true);
     this.setColour(210);
-    this.setTooltip('');
-    this.setHelpUrl('http://www.example.com/');
-  }
-};
-
-Blockly.Blocks['return'] = {
-  init: function() {
-    this.appendDummyInput()
-      .appendField("return");
-    this.appendValueInput("var");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setColour(150);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
