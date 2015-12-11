@@ -13,13 +13,15 @@ block content
       <block type="turnon"></block>
       <block type="turnoff"></block>
       <block type="getstate"></block>
-      <block type="wait"></block>
+      <block type="sensor"></block>
+      <block type="measure"></block>
       <block type="dcmotor"></block>
       <block type="moveforward"></block>
       <block type="movebackward"></block>
       <block type="twodcmotor"></block>
-      <block type="sensor"></block>
-      <block type="measure"></block>
+      <block type="wait"></block>
+      <block type="print"></block>
+      <block type="button"></block>
     </category>
     <category name="Estruturas Condicionais">
       <block type="controls_if"></block>
@@ -48,14 +50,14 @@ block content
 
 
   script.
-    var workspace,
+    var workspace;
 
-    custom = function() {
+    var custom = function() {
       console.log('load custom blocks');
       loadCustomBlocks(['raspiblocos.js'], inject);
-    },
+    };
 
-    inject = function(){
+    var inject = function(){
       console.log('inject blockly');
       workspace = Blockly.inject(document.getElementById('blocklyDiv'),{toolbox: document.getElementById('toolbox')});
     };
@@ -75,7 +77,18 @@ block content
         alert(e);
       }
     }
-
+    
+    //socket.io
+    var socket = io.connect('http://localhost:8000');
+    socket.on('connect', function(data) {
+        socket.emit('join', 'ping from client');
+    });
+    
+    socket.on('messages', function(data) {
+        console.log(data);
+    });
+    
+    //send instructions to application
     function sendCode(inst){
       $.post("/raspiblocos", {"code" : inst})
       .then(function (data, textStatus, jqXHR) {

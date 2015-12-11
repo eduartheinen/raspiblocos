@@ -1,21 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var Q = require('q');
-var sensorFactory = require('raspiblocos/sensor');
-var dcmotorFactory = require('raspiblocos/dcmotor');
-var gpioFactory = require('raspiblocos/gpio');
-var buttonFactory = require('raspiblocos/button');
+// var sensorFactory = require('raspiblocos/sensor');
+// var dcmotorFactory = require('raspiblocos/dcmotor');
+// var gpioFactory = require('raspiblocos/gpio');
+// var buttonFactory = require('raspiblocos/button');
 
 /*
 TODO
  - singletons
- - print
 */
 
-/* As the functions are called inside the dinamically
-created GeneratorFunction, we need to declare the builders
-and the wait function in the global scope */
+/* As the functions are called inside a dinamically
+created GeneratorFunction, we needed to declare the 'component
+builders', 'send' and 'wait' functions in the global scope */
 global.wait = require('raspiblocos/wait');
+global.print = require('raspiblocos/print');
 
 global.builder = {
   dcmotor: function(params) {

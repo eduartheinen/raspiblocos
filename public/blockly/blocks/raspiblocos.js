@@ -61,7 +61,7 @@ Blockly.Blocks['turnoff'] = {
 Blockly.Blocks['getstate'] = {
   init: function() {
     this.setHelpUrl('http://www.example.com/');
-    this.setColour(180);
+    this.setColour(150);
     this.appendDummyInput()
       .appendField("gpio");
     this.appendDummyInput()
@@ -185,7 +185,39 @@ Blockly.Blocks['wait'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(320);
+    this.setColour(340);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+//print
+Blockly.Blocks['print'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("imprima");
+    this.appendValueInput("value");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(340);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+//button
+Blockly.Blocks['button'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("botão");
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(opt), "gpio");
+    this.appendStatementInput("callback");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(0);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }

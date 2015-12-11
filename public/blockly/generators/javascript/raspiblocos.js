@@ -60,7 +60,6 @@ Blockly.JavaScript['sensor'] = function(block) {
   var gpio2 = block.getFieldValue('gpio2');
   var instruction = Blockly.JavaScript.valueToCode(block, 'instruction', Blockly.JavaScript.ORDER_ATOMIC);
   var code = "yield builder.sensor([" + gpio1 + "," + gpio2 + "])" + instruction;
-  console.log(code);
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
@@ -69,15 +68,24 @@ Blockly.JavaScript['measure'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-Blockly.JavaScript['return'] = function(block) {
+//wait
+Blockly.JavaScript['wait'] = function(block) {
+  var time = block.getFieldValue('time');
+  var code = "yield wait(" + time + ");\n";
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+//print
+Blockly.JavaScript['print'] = function(block) {
   var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = 'return ' + value_var + ';\n';
+  var code = 'print.message(' + value_var + ');\n';
   return code;
 };
 
-//dc-motor
-Blockly.JavaScript['wait'] = function(block) {
-  var time = block.getFieldValue('time');
-  var code = "yield builder.wait(" + time + ");\n";
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+//button
+Blockly.JavaScript['button'] = function(block) {
+  var gpio = block.getFieldValue('gpio');
+  var callback = Blockly.JavaScript.statementToCode(block, 'callback');
+  var code = "builder.button(" + gpio + ").setListener(" + callback + ")";
+  return code;
 };

@@ -10,6 +10,11 @@ var raspiblocos = require('./routes/raspiblocos');
 
 var app = express();
 
+//socket test
+var httpd = require('http').createServer(app).listen(8000, function() {
+  console.log('HTTP server listening on port 8000');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -18,7 +23,9 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -56,5 +63,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var io = require('socket.io').listen(httpd);
+var print = require('raspiblocos/print')(io);
+print.message('houston');
 
 module.exports = app;
